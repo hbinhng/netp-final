@@ -1,4 +1,4 @@
-package org.uet.int3304.group5.node;
+package org.uet.int3304.node;
 
 import static org.junit.Assert.assertTrue;
 
