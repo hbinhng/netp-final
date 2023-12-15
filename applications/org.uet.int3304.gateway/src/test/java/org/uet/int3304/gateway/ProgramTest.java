@@ -1,4 +1,4 @@
-package org.uet.int3304.group5;
+package org.uet.int3304.gateway;
 
 import static org.junit.Assert.assertTrue;
 
