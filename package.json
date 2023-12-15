@@ -1,0 +1,22 @@
+{
+  "name": "netp-final",
+  "version": "0.0.1",
+  "author": "Group 5",
+  "description": "Final project for Network programming course",
+  "contributors": [
+    "Hai Binh Nguyen <binhmattroi@gmail.com>",
+    "Ngoc Ninh Nguyen <ninhnguyen236@gmail.com>",
+    "Minh Sang Vu",
+    "Tan Lap Do <blackbeans.1301@gmail.com>",
+    "Nam Dung Nguyen Ba",
+    "Quang Phong Pham"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:hbinhng/netp-final.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hbinhng/netp-final/issues"
+  },
+  "homepage": "https://github.com/hbinhng/netp-final#readme"
+}
