@@ -2,7 +2,7 @@ package org.uet.int3304.node.Generator;
 
 import java.util.Random;
 
-public class ECGSignalGenerator implements Generator {
+public class ECGSignalGenerator implements Generator<Float> {
     private static final float BASELINE_HEART_RATE = 78f / 60;
     private final long spawn;
     private final Random random;
@@ -52,7 +52,7 @@ public class ECGSignalGenerator implements Generator {
     }
 
     @Override
-    public float next() {
+    public Float next() {
         var timeDiff = System.currentTimeMillis() - spawn;
 
         var result = 0f;

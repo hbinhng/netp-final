@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * This generate pseudo signal to emulate realtime thermometer.
  */
-public class TemperatureGenerator implements Generator {
+public class TemperatureGenerator implements Generator<Float> {
     private static final float BASE_TEMP = 36f;
     private final long spawn;
     private final Random random;
@@ -18,7 +18,7 @@ public class TemperatureGenerator implements Generator {
     }
 
     @Override
-    public float next() {
+    public Float next() {
         var time = System.currentTimeMillis();
         var timeOffset = time - spawn;
 
