@@ -75,7 +75,63 @@
         https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>3.3.1</version>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${basedir}/target/jfx-lib</outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-web/11</directory>
+                    <includes>
+                      <include>javafx-web-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-swing/11</directory>
+                    <includes>
+                      <include>javafx-swing-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-graphics/11</directory>
+                    <includes>
+                      <include>javafx-graphics-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-media/11</directory>
+                    <includes>
+                      <include>javafx-media-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-controls/11</directory>
+                    <includes>
+                      <include>javafx-controls-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-base/11</directory>
+                    <includes>
+                      <include>javafx-base-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>${user.home}/.m2/repository/org/openjfx/javafx-fxml/11</directory>
+                    <includes>
+                      <include>javafx-fxml-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
