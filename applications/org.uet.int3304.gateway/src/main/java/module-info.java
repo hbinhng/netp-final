@@ -15,4 +15,6 @@ module org.uet.int3304.gateway {
     opens org.uet.int3304.gateway.UI.controllers
             to javafx.base, javafx.controls, javafx.fxml,
             javafx.graphics;
+
+    exports org.uet.int3304.gateway;
 }
