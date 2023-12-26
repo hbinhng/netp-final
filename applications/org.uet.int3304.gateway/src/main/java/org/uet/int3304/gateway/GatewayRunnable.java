@@ -28,13 +28,21 @@ public class GatewayRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            Float number;
-            while ((number = in.readFloat()) != null) {
-                System.out.println("Received: " + number);
+            String data;
+            int count = 3;
+            while ((data = in.readUTF()) != null) {
+                System.out.println("Received: " + data);
                 // handleRequest(request);
                 // if (request.equals("QUIT")) {
                 // break;
                 // }
+
+                //Demo gateway sinh dữ liệu điều khiển IoT node
+                if (count > 0) {
+                    count--;
+                    out.writeInt(1);
+                } else out.writeInt(-1);
+                
                 out.flush();
             }
             socket.close();

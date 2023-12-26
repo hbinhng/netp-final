@@ -5,11 +5,12 @@ import org.uet.int3304.node.Generator.TemperatureGenerator;
 
 public class Program {
     public static void main(String[] args) {
-        Node node1 = new Node(new TemperatureGenerator());
-        Thread thread1 = new Thread(node1);
-        Node node2 = new Node(new ECGSignalGenerator());
-        Thread thread2 = new Thread(node2);
-        thread1.start();
-        thread2.start();
+        Node temperatureNode = new Node(new TemperatureGenerator(), "Temperature");
+        Thread temperatureThread = new Thread(temperatureNode);
+        Node ecgNode = new Node(new ECGSignalGenerator(), "ECGSignal");
+        Thread ecgThread = new Thread(ecgNode);
+
+        temperatureThread.start();
+        ecgThread.start();
     }
 }
