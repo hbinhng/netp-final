@@ -6,6 +6,7 @@ public class Config {
 
   private int port;
   private long dataPollInterval;
+  private boolean headless;
 
   private Config() {
   }
@@ -15,6 +16,7 @@ public class Config {
 
     port = Integer.parseInt(overlappedConfigurations.getOrDefault("PORT", "8080"));
     dataPollInterval = Long.parseLong(overlappedConfigurations.getOrDefault("DATA_INT", "500"));
+    headless = overlappedConfigurations.getOrDefault("HEADLESS", "false").trim().equals("true");
   }
 
   public int getPort() {
@@ -23,6 +25,10 @@ public class Config {
 
   public long getDataPollInterval() {
     return dataPollInterval;
+  }
+
+  public boolean getHeadless() {
+    return headless;
   }
 
   public static Config getInstance() {
