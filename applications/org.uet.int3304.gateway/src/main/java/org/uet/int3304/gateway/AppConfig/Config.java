@@ -13,8 +13,8 @@ public class Config {
   public void loadConfig() {
     var overlappedConfigurations = new ConfigLoader().load();
 
-    port = Integer.parseInt(overlappedConfigurations.get("PORT"));
-    dataPollInterval = Long.parseLong(overlappedConfigurations.get("DATA_INT"));
+    port = Integer.parseInt(overlappedConfigurations.getOrDefault("PORT", "8080"));
+    dataPollInterval = Long.parseLong(overlappedConfigurations.getOrDefault("DATA_INT", "500"));
   }
 
   public int getPort() {
