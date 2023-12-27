@@ -117,7 +117,7 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${basedir}/target/jfx-lib</outputDirectory>
+                <outputDirectory>${basedir}/target/deps</outputDirectory>
                 <resources>
                   <resource>
                     <directory>${user.home}/.m2/repository/org/openjfx/javafx-web/11</directory>
@@ -159,6 +159,13 @@
                     <directory>${user.home}/.m2/repository/org/openjfx/javafx-fxml/11</directory>
                     <includes>
                       <include>javafx-fxml-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>
+                      ${user.home}/.m2/repository/io/github/cdimascio/dotenv-java/3.0.0</directory>
+                    <includes>
+                      <include>dotenv-java-3.0.0.jar</include>
                     </includes>
                   </resource>
                 </resources>
