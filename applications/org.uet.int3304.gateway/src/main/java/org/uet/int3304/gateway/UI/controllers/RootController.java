@@ -66,6 +66,6 @@ public class RootController implements Initializable {
   }
 
   public void updateBPChart() {
-    bloodPressureController.updateChart(currentTime);
+    bloodPressureController.updateChart();
   }
 }
