@@ -35,7 +35,8 @@
         <LineChart fx:id="BPChart" horizontalZeroLineVisible="false" layoutX="360.0" layoutY="400.0"
             prefHeight="200.0" prefWidth="720.0" title="Blood pressure">
             <xAxis>
-                <NumberAxis side="BOTTOM" tickLabelGap="0.0" />
+                <NumberAxis side="BOTTOM" tickLabelGap="0.0" lowerBound="-30.0" upperBound="0.0"
+                    autoRanging="false" />
             </xAxis>
             <yAxis>
                 <NumberAxis minorTickCount="2" minorTickLength="3.0" side="LEFT" tickUnit="25.0"
