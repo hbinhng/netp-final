@@ -70,7 +70,10 @@
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
         <configuration>
+          <finalName>${project.artifactId}-${project.version}-linux-x64</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
           <archive>
             <manifest>
               <mainClass>org.uet.int3304.gateway.Program</mainClass>
@@ -80,8 +83,18 @@
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
         </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
+
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to
       parent pom) -->
       <plugins>
@@ -104,7 +117,7 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${basedir}/target/jfx-lib</outputDirectory>
+                <outputDirectory>${basedir}/target/deps</outputDirectory>
                 <resources>
                   <resource>
                     <directory>${user.home}/.m2/repository/org/openjfx/javafx-web/11</directory>
@@ -146,6 +159,13 @@
                     <directory>${user.home}/.m2/repository/org/openjfx/javafx-fxml/11</directory>
                     <includes>
                       <include>javafx-fxml-11-linux.jar</include>
+                    </includes>
+                  </resource>
+                  <resource>
+                    <directory>
+                      ${user.home}/.m2/repository/io/github/cdimascio/dotenv-java/3.0.0</directory>
+                    <includes>
+                      <include>dotenv-java-3.0.0.jar</include>
                     </includes>
                   </resource>
                 </resources>
