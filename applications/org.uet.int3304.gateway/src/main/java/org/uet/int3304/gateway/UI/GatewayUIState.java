@@ -3,7 +3,7 @@ package org.uet.int3304.gateway.UI;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.uet.int3304.gateway.bucket.Bucket;
+import org.uet.int3304.gateway.Bucket.Bucket;
 
 public class GatewayUIState {
   private static final Object lock = new Object();

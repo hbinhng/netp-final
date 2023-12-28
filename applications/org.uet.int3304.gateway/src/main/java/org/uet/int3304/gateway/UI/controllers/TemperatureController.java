@@ -1,8 +1,8 @@
 package org.uet.int3304.gateway.UI.controllers;
 
+import org.uet.int3304.gateway.Bucket.Bucket;
 import org.uet.int3304.gateway.UI.BucketId;
 import org.uet.int3304.gateway.UI.GatewayUIState;
-import org.uet.int3304.gateway.bucket.Bucket;
 
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
