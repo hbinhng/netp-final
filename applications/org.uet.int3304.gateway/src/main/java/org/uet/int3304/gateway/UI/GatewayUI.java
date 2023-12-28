@@ -23,10 +23,8 @@ public class GatewayUI extends Application {
     // var screenSize = Screen.getPrimary().getBounds();
 
     Parent root = fxmlLoader.load();
-    
-    ctrl = fxmlLoader.getController();
 
-    System.out.println(ctrl);
+    ctrl = fxmlLoader.getController();
 
     var scene = new Scene(
         root,
@@ -39,6 +37,8 @@ public class GatewayUI extends Application {
     stage.setScene(scene);
 
     stage.show();
+
+    instance = this;
   }
 
   public void pushTData(double value) {
@@ -52,7 +52,7 @@ public class GatewayUI extends Application {
   }
 
   public void pushBPData(double systolicValue, double diastolicValue) {
-    if(ctrl != null)
+    if (ctrl != null)
       ctrl.pushBPData(systolicValue, diastolicValue);
   }
 
@@ -61,9 +61,6 @@ public class GatewayUI extends Application {
   }
 
   public static GatewayUI getInstance() {
-    if (instance == null) {
-      instance = new GatewayUI();
-    }
     return instance;
   }
 }
