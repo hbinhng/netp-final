@@ -1,4 +1,4 @@
-package org.uet.int3304.gateway.server;
+package org.uet.int3304.gateway.Server;
 
 import java.io.IOException;
 import java.net.InetAddress;
