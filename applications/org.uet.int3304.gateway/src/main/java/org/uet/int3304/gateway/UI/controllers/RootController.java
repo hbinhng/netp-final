@@ -12,60 +12,60 @@ import java.util.ResourceBundle;
 
 public class RootController implements Initializable {
 
-    @FXML
-    private LineChart<Number, Number> TChart;
+  @FXML
+  private LineChart<Number, Number> TChart;
 
-    @FXML
-    private LineChart<Number, Number> HBChart;
+  @FXML
+  private LineChart<Number, Number> HBChart;
 
-    @FXML
-    private LineChart<Number, Number> BPChart;
+  @FXML
+  private LineChart<Number, Number> BPChart;
 
-    private TemperatureController temperatureController;
-    private HeartbeatController heartbeatController;
-    private BloodPressureController bloodPressureController;
+  private TemperatureController temperatureController;
+  private HeartbeatController heartbeatController;
+  private BloodPressureController bloodPressureController;
 
-    private int currentTime = 0;
+  private int currentTime = 0;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        temperatureController = new TemperatureController(TChart);
-        heartbeatController = new HeartbeatController(HBChart);
-        bloodPressureController = new BloodPressureController(BPChart);
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    temperatureController = new TemperatureController(TChart);
+    heartbeatController = new HeartbeatController(HBChart);
+    bloodPressureController = new BloodPressureController(BPChart);
 
-        // Set up the timeline to update the charts periodically
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            currentTime++;
-            updateBPChart();
-            updateHBChart();
-            updateTChart();
-        }));
+    // Set up the timeline to update the charts periodically
+    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+      currentTime++;
+      updateBPChart();
+      updateHBChart();
+      updateTChart();
+    }));
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+  }
 
-    public void pushTData(double value) {
-        temperatureController.pushData(value);
-    }
+  public void pushTData(double value) {
+    temperatureController.pushData(value);
+  }
 
-    public void pushHBData(double value) {
-        heartbeatController.pushData(value);
-    }
+  public void pushHBData(double value) {
+    heartbeatController.pushData(value);
+  }
 
-    public void pushBPData(double systolicValue, double diastolicValue) {
-        bloodPressureController.pushData(systolicValue, diastolicValue);
-    }
+  public void pushBPData(double systolicValue, double diastolicValue) {
+    bloodPressureController.pushData(systolicValue, diastolicValue);
+  }
 
-    public void updateTChart() {
-        temperatureController.updateChart(currentTime);
-    }
+  public void updateTChart() {
+    temperatureController.updateChart(currentTime);
+  }
 
-    public void updateHBChart() {
-        heartbeatController.updateChart(currentTime);
-    }
+  public void updateHBChart() {
+    heartbeatController.updateChart(currentTime);
+  }
 
-    public void updateBPChart() {
-        bloodPressureController.updateChart(currentTime);
-    }
+  public void updateBPChart() {
+    bloodPressureController.updateChart(currentTime);
+  }
 }

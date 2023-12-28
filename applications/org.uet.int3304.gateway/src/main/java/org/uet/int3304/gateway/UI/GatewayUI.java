@@ -9,22 +9,23 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GatewayUI extends Application {
-  private static GatewayUI gatewayUI;
-  //private static final double INITIAL_SCALE = 0.8;
+  private static GatewayUI instance;
+  // private static final double INITIAL_SCALE = 0.8;
   private static final int INITIAL_WIDTH = 1080;
   private static final int INITIAL_HEIGHT = 600;
   private static final String TITLE = "Gateway UI";
-  private RootController ctrl;
+  private RootController ctrl = (RootController) (new FXMLLoader(GatewayUI.class.getResource("root-view.fxml")))
+      .getController();
 
   @Override
   public void start(Stage stage) throws Exception {
     var fxmlLoader = new FXMLLoader(GatewayUI.class.getResource("root-view.fxml"));
-    //var screenSize = Screen.getPrimary().getBounds();
+    // var screenSize = Screen.getPrimary().getBounds();
 
     var scene = new Scene(
         fxmlLoader.load(),
-        //screenSize.getWidth() * INITIAL_SCALE,
-        //screenSize.getHeight() * INITIAL_SCALE);
+        // screenSize.getWidth() * INITIAL_SCALE,
+        // screenSize.getHeight() * INITIAL_SCALE);
         INITIAL_WIDTH,
         INITIAL_HEIGHT);
 
@@ -32,7 +33,6 @@ public class GatewayUI extends Application {
     stage.setScene(scene);
 
     stage.show();
-    ctrl = (RootController)(fxmlLoader.getController());
   }
 
   public void pushTData(double value) {
@@ -52,9 +52,9 @@ public class GatewayUI extends Application {
   }
 
   public static GatewayUI getInstance() {
-    if (gatewayUI == null) {
-      gatewayUI = new GatewayUI();
+    if (instance == null) {
+      instance = new GatewayUI();
     }
-    return gatewayUI;
+    return instance;
   }
 }
