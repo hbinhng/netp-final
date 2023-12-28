@@ -1,16 +1,9 @@
 package org.uet.int3304.node;
 
+import org.uet.int3304.node.AppConfig.Config;
+
 public class Program {
-
   public static void main(String[] args) {
-    String type = args[0];
-    String gatewayIpAddress = args[1];
-    String gatewayPort = args[2];
-
-    System.out.println("type: " + type);
-    System.out.println("gatewayIpAddress: " + gatewayIpAddress);
-    System.out.println("gatewayPort: " + gatewayPort);
-
-    System.out.println("Hello World!");
+    Config.getInstance().loadConfig();
   }
 }
