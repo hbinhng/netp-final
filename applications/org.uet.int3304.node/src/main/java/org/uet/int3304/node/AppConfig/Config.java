@@ -7,6 +7,7 @@ public class Config {
   private String gatewayHost;
   private int gatewayPort;
   private long dataInterval;
+  private NodeType nodeType;
 
   private Config() {
   }
@@ -17,6 +18,19 @@ public class Config {
     gatewayHost = overlappedConfigurations.getOrDefault("GW_ADDR", "127.0.0.1").trim();
     gatewayPort = Integer.parseInt(overlappedConfigurations.getOrDefault("GW_PORT", "8080"));
     dataInterval = Long.parseLong(overlappedConfigurations.getOrDefault("DATA_INT", "500"));
+
+    var rawNodeType = overlappedConfigurations.getOrDefault("NODE_TYPE", "TP");
+
+    if (rawNodeType.equals("TP"))
+      nodeType = NodeType.Temperature;
+    else if (rawNodeType.equals("BP"))
+      nodeType = NodeType.BloodPressure;
+    else if (rawNodeType.equals("HB"))
+      nodeType = NodeType.Heartbeat;
+    else {
+      System.err.printf("Unknown node type '%s'\n", rawNodeType);
+      System.exit(-1);
+    }
   }
 
   public String getGatewayHost() {
@@ -29,6 +43,10 @@ public class Config {
 
   public long getDataInterval() {
     return dataInterval;
+  }
+
+  public NodeType getNodeType() {
+    return nodeType;
   }
 
   public static Config getInstance() {
