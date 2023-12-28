@@ -57,6 +57,16 @@ public class NodeClient {
       System.err.println(exception.getMessage());
       System.exit(-1);
     }
+
+    try {
+      var thread = new Thread(new NodeGeneratorThread(internal));
+
+      thread.start();
+    } catch (IOException exception) {
+      System.err.println("Cannot start generator thread");
+      System.err.println(exception.getMessage());
+      System.exit(-1);
+    }
   }
 
   public Generator<Float> getGenerator() {
