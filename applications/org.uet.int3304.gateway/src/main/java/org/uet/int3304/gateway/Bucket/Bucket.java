@@ -1,4 +1,4 @@
-package org.uet.int3304.gateway.bucket;
+package org.uet.int3304.gateway.Bucket;
 
 import java.util.LinkedList;
 import java.util.List;

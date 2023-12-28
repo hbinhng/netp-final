@@ -5,6 +5,7 @@ public class Config {
   private static Config instance;
 
   private int port;
+  private int maxWorkers;
   private long dataPollInterval;
   private boolean headless;
 
@@ -15,12 +16,17 @@ public class Config {
     var overlappedConfigurations = new ConfigLoader().load();
 
     port = Integer.parseInt(overlappedConfigurations.getOrDefault("PORT", "8080"));
+    maxWorkers = Integer.parseInt(overlappedConfigurations.getOrDefault("WORKER", "10"));
     dataPollInterval = Long.parseLong(overlappedConfigurations.getOrDefault("DATA_INT", "500"));
     headless = overlappedConfigurations.getOrDefault("HEADLESS", "false").trim().equals("true");
   }
 
   public int getPort() {
     return port;
+  }
+
+  public int getMaxWorkers() {
+    return maxWorkers;
   }
 
   public long getDataPollInterval() {

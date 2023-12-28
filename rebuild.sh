@@ -1,3 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
-mvn clean install
+command="mvn clean package"
+
+if [[ "$*" == *"--no-thicc"* ]]
+then
+  command+=" -Dassembly.skipAssembly=true"
+fi
+
+$command
