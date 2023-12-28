@@ -7,16 +7,8 @@ public class Program {
     public static void main(String[] args) {
         var config = Config.getInstance();
         config.loadConfig();
-        
-        if (!config.getHeadless()) {
+
+        if (!config.getHeadless())
             GatewayUI.launch(args);
-            // Test push data 
-            while(true) {
-                GatewayUI.getInstance().pushTData(36.5);
-                GatewayUI.getInstance().pushHBData(80);
-                GatewayUI.getInstance().pushBPData(120, 80);
-            }
-            // End test push data
-        }
     }
 }
