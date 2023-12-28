@@ -1,7 +1,5 @@
 package org.uet.int3304.gateway.UI;
 
-import org.uet.int3304.gateway.UI.controllers.RootController;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +13,6 @@ public class GatewayUI extends Application {
   private static final int INITIAL_WIDTH = 1080;
   private static final int INITIAL_HEIGHT = 600;
   private static final String TITLE = "Gateway UI";
-  private RootController ctrl;
 
   @Override
   public void start(Stage stage) throws Exception {
@@ -23,8 +20,6 @@ public class GatewayUI extends Application {
     // var screenSize = Screen.getPrimary().getBounds();
 
     Parent root = fxmlLoader.load();
-
-    ctrl = fxmlLoader.getController();
 
     var scene = new Scene(
         root,
@@ -39,21 +34,6 @@ public class GatewayUI extends Application {
     stage.show();
 
     instance = this;
-  }
-
-  public void pushTData(double value) {
-    if (ctrl != null)
-      ctrl.pushTData(value);
-  }
-
-  public void pushHBData(double value) {
-    if (ctrl != null)
-      ctrl.pushHBData(value);
-  }
-
-  public void pushBPData(double systolicValue, double diastolicValue) {
-    if (ctrl != null)
-      ctrl.pushBPData(systolicValue, diastolicValue);
   }
 
   public static void launch(String[] args) {

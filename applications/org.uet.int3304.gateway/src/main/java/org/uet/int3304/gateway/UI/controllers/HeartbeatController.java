@@ -1,5 +1,7 @@
 package org.uet.int3304.gateway.UI.controllers;
 
+import org.uet.int3304.gateway.UI.BucketId;
+import org.uet.int3304.gateway.UI.GatewayUIState;
 import org.uet.int3304.gateway.bucket.Bucket;
 
 import javafx.scene.chart.LineChart;
@@ -24,9 +26,8 @@ public class HeartbeatController extends ChartController {
     chart.setLegendVisible(true);
 
     linkSeriesWithBucket(heartbeatSeries, heartbeatBucket);
-  }
 
-  public void pushData(double value) {
-    heartbeatBucket.pushData(value);
+    GatewayUIState.getInstance().registerBucket(
+        BucketId.HB_BUCKET, heartbeatBucket);
   }
 }

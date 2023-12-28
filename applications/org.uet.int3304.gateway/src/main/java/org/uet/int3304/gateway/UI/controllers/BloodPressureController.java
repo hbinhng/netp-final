@@ -1,5 +1,7 @@
 package org.uet.int3304.gateway.UI.controllers;
 
+import org.uet.int3304.gateway.UI.BucketId;
+import org.uet.int3304.gateway.UI.GatewayUIState;
 import org.uet.int3304.gateway.bucket.Bucket;
 
 import javafx.scene.chart.LineChart;
@@ -30,10 +32,9 @@ public class BloodPressureController extends ChartController {
 
     linkSeriesWithBucket(systolicSeries, systolicBucket);
     linkSeriesWithBucket(diastolicSeries, diastolicBucket);
-  }
 
-  public void pushData(double systolicValue, double diastolicValue) {
-    systolicBucket.pushData(systolicValue);
-    diastolicBucket.pushData(diastolicValue);
+    var state = GatewayUIState.getInstance();
+    state.registerBucket(BucketId.SYSTOLIC_BUCKET, systolicBucket);
+    state.registerBucket(BucketId.DIASTOLIC_BUCKET, diastolicBucket);
   }
 }

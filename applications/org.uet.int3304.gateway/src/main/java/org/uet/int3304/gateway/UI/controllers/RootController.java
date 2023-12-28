@@ -42,18 +42,6 @@ public class RootController implements Initializable {
     timeline.play();
   }
 
-  public void pushTData(double value) {
-    temperatureController.pushData(value);
-  }
-
-  public void pushHBData(double value) {
-    heartbeatController.pushData(value);
-  }
-
-  public void pushBPData(double systolicValue, double diastolicValue) {
-    bloodPressureController.pushData(systolicValue, diastolicValue);
-  }
-
   public void updateTChart() {
     temperatureController.updateChart();
   }
