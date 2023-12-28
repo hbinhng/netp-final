@@ -28,8 +28,8 @@ public class TemperatureController {
         temperatureBucket.pushData(value);
     }
 
-    public void updateChart(int timeElapsed) {
-        TChart.getData().get(0).getData().add(new XYChart.Data<>(timeElapsed, temperatureBucket.getAverage()));
+    public void updateChart(int currentTime) {
+        TChart.getData().get(0).getData().add(new XYChart.Data<>(currentTime, temperatureBucket.getAverage()));
         temperatureBucket.flushData();
     }
 

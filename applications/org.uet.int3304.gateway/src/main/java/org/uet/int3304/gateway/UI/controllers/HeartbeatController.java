@@ -28,8 +28,8 @@ public class HeartbeatController {
 		heartbeatBucket.pushData(value);
 	}
 
-    public void updateChart(int timeElapsed) {
-        HBChart.getData().get(0).getData().add(new XYChart.Data<>(timeElapsed, heartbeatBucket.getAverage()));
+    public void updateChart(int currentTime) {
+        HBChart.getData().get(0).getData().add(new XYChart.Data<>(currentTime, heartbeatBucket.getAverage()));
 		heartbeatBucket.flushData();
     }
 

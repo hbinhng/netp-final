@@ -30,9 +30,9 @@ public class BloodPressureController {
 		bloodPressureBucket.pushData(systolicValue, diastolicValue);
 	}
 
-    public void updateChart(int timeElapsed) {
-        BPChart.getData().get(0).getData().add(new XYChart.Data<>(timeElapsed, bloodPressureBucket.getSystolicAverage()));
-        BPChart.getData().get(1).getData().add(new XYChart.Data<>(timeElapsed, bloodPressureBucket.getDiastolicAverage()));
+    public void updateChart(int currentTime) {
+        BPChart.getData().get(0).getData().add(new XYChart.Data<>(currentTime, bloodPressureBucket.getSystolicAverage()));
+        BPChart.getData().get(1).getData().add(new XYChart.Data<>(currentTime, bloodPressureBucket.getDiastolicAverage()));
 		bloodPressureBucket.flushData();
     }
 

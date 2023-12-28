@@ -25,7 +25,7 @@ public class RootController implements Initializable {
     private HeartbeatController heartbeatController;
     private BloodPressureController bloodPressureController;
 
-    private int timeElapsed = 0;
+    private int currentTime = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,7 +35,7 @@ public class RootController implements Initializable {
 
         // Set up the timeline to update the charts periodically
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            timeElapsed++;
+            currentTime++;
             updateBPChart();
             updateHBChart();
             updateTChart();
@@ -58,14 +58,14 @@ public class RootController implements Initializable {
     }
 
     public void updateTChart() {
-        temperatureController.updateChart(timeElapsed);
+        temperatureController.updateChart(currentTime);
     }
 
     public void updateHBChart() {
-        heartbeatController.updateChart(timeElapsed);
+        heartbeatController.updateChart(currentTime);
     }
 
     public void updateBPChart() {
-        bloodPressureController.updateChart(timeElapsed);
+        bloodPressureController.updateChart(currentTime);
     }
 }
