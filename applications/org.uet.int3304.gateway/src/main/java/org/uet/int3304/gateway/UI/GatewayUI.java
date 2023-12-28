@@ -4,6 +4,7 @@ import org.uet.int3304.gateway.UI.controllers.RootController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 //import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -14,16 +15,21 @@ public class GatewayUI extends Application {
   private static final int INITIAL_WIDTH = 1080;
   private static final int INITIAL_HEIGHT = 600;
   private static final String TITLE = "Gateway UI";
-  private RootController ctrl = (RootController) (new FXMLLoader(GatewayUI.class.getResource("root-view.fxml")))
-      .getController();
+  private RootController ctrl;
 
   @Override
   public void start(Stage stage) throws Exception {
     var fxmlLoader = new FXMLLoader(GatewayUI.class.getResource("root-view.fxml"));
     // var screenSize = Screen.getPrimary().getBounds();
 
+    Parent root = fxmlLoader.load();
+    
+    ctrl = fxmlLoader.getController();
+
+    System.out.println(ctrl);
+
     var scene = new Scene(
-        fxmlLoader.load(),
+        root,
         // screenSize.getWidth() * INITIAL_SCALE,
         // screenSize.getHeight() * INITIAL_SCALE);
         INITIAL_WIDTH,
@@ -36,15 +42,18 @@ public class GatewayUI extends Application {
   }
 
   public void pushTData(double value) {
-    ctrl.pushTData(value);
+    if (ctrl != null)
+      ctrl.pushTData(value);
   }
 
   public void pushHBData(double value) {
-    ctrl.pushHBData(value);
+    if (ctrl != null)
+      ctrl.pushHBData(value);
   }
 
   public void pushBPData(double systolicValue, double diastolicValue) {
-    ctrl.pushBPData(systolicValue, diastolicValue);
+    if(ctrl != null)
+      ctrl.pushBPData(systolicValue, diastolicValue);
   }
 
   public static void launch(String[] args) {
