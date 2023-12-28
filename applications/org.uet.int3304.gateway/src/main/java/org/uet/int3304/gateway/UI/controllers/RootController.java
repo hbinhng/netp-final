@@ -62,7 +62,7 @@ public class RootController implements Initializable {
   }
 
   public void updateHBChart() {
-    heartbeatController.updateChart(currentTime);
+    heartbeatController.updateChart();
   }
 
   public void updateBPChart() {

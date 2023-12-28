@@ -1,59 +1,32 @@
 package org.uet.int3304.gateway.UI.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.uet.int3304.gateway.bucket.Bucket;
 
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
-public class HeartbeatController {
+public class HeartbeatController extends ChartController {
+  private static final long DATA_RETENTION = 30 * 1000; // 30 seconds
 
-  private LineChart<Number, Number> HBChart;
-  private HeartbeatBucket heartbeatBucket;
+  private final Bucket heartbeatBucket;
 
-  public HeartbeatController(LineChart<Number, Number> HBChart) {
-    this.HBChart = HBChart;
-    initialize();
-  }
+  public HeartbeatController(LineChart<Number, Number> chart) {
+    super();
+    heartbeatBucket = new Bucket(DATA_RETENTION);
 
-  public void initialize() {
-    XYChart.Series<Number, Number> seriesHB = new XYChart.Series<>();
-    HBChart.getData().add(seriesHB);
-    seriesHB.setName("Heartbeat");
-    HBChart.setLegendVisible(true);
-    heartbeatBucket = new HeartbeatBucket();
+    var heartbeatSeries = new XYChart.Series<Number, Number>();
+
+    var chartData = chart.getData();
+    chartData.add(heartbeatSeries);
+
+    heartbeatSeries.setName("Heartbeat");
+
+    chart.setLegendVisible(true);
+
+    linkSeriesWithBucket(heartbeatSeries, heartbeatBucket);
   }
 
   public void pushData(double value) {
     heartbeatBucket.pushData(value);
-  }
-
-  public void updateChart(int currentTime) {
-    HBChart.getData().get(0).getData().add(new XYChart.Data<>(currentTime, heartbeatBucket.getAverage()));
-    heartbeatBucket.flushData();
-  }
-
-  public class HeartbeatBucket {
-    private List<Double> heartbeatBucket;
-
-    public HeartbeatBucket() {
-      heartbeatBucket = new ArrayList<>();
-    }
-
-    public void pushData(double value) {
-      heartbeatBucket.add(value);
-    }
-
-    public double getAverage() {
-      double sum = 0;
-      for (double value : heartbeatBucket) {
-        sum += value;
-      }
-      return sum / heartbeatBucket.size();
-    }
-
-    public void flushData() {
-      heartbeatBucket.clear();
-    }
   }
 }
