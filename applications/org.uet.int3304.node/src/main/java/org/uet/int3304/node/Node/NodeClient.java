@@ -48,7 +48,15 @@ public class NodeClient {
   }
 
   public void lifeCycle() {
+    try {
+      var thread = new Thread(new NodeMainThread(internal));
 
+      thread.start();
+    } catch (IOException exception) {
+      System.err.println("Cannot start connection thread");
+      System.err.println(exception.getMessage());
+      System.exit(-1);
+    }
   }
 
   public Generator<Float> getGenerator() {
