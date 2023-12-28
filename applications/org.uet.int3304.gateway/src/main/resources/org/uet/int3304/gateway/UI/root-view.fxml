@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="org.uet.int3304.gateway.UI.controllers.RootController"
-  fx:id="root">
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uet.int3304.gateway.UI.controllers.RootController">
+    <children>
+        <LineChart fx:id="TChart" horizontalZeroLineVisible="false" layoutX="360.0" prefHeight="200.0" prefWidth="720.0" title="Temperature">
+            <xAxis>
+                <NumberAxis fx:id="tempXAxis" side="BOTTOM" tickLabelGap="0.0" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="tempYAxis" forceZeroInRange="false" lowerBound="37.0" minorTickCount="2" minorTickLength="3.0" side="LEFT" tickUnit="0.5" upperBound="40.0" />
+            </yAxis>
+            <createSymbols>false</createSymbols>
+        </LineChart>
+        <LineChart fx:id="HBChart" horizontalZeroLineVisible="false" layoutX="360.0" layoutY="200.0" prefHeight="200.0" prefWidth="720.0" title="Heart beat">
+            <xAxis>
+                <NumberAxis side="BOTTOM" tickLabelGap="0.0" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis forceZeroInRange="false" lowerBound="61.0" minorTickCount="2" minorTickLength="3.0" side="LEFT" upperBound="79.0" />
+            </yAxis>
+            <createSymbols>false</createSymbols>
+        </LineChart>
+        <LineChart fx:id="BPChart" horizontalZeroLineVisible="false" layoutX="360.0" layoutY="400.0" prefHeight="200.0" prefWidth="720.0" title="Blood pressure">
+            <xAxis>
+                <NumberAxis side="BOTTOM" tickLabelGap="0.0" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis minorTickCount="2" minorTickLength="3.0" side="LEFT" tickUnit="25.0" upperBound="198.0" />
+            </yAxis>
+            <createSymbols>false</createSymbols>
+        </LineChart>
+    </children>
 </AnchorPane>
