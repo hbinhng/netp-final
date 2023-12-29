@@ -4,7 +4,7 @@
 
 - Client connect to server via host name and port
 
-- Client: `Ping`
+- Client: `ping`
 
 - Server: `200 Pong`
 
@@ -80,3 +80,15 @@
   - If node did not complete handshake:
   
     `100 Who are you?`
+
+## 5. Unknown command
+
+- Client: `someunknowncommand arg1 arg2`
+
+- Server: `101 Unknown command`
+
+## 6. Malformed arguments
+
+- Client: Send a command without needed argument.
+
+- Server: `102 Malformed arguments`
