@@ -74,8 +74,8 @@ public class ConfiguratorController implements Initializable {
 			return;
 		}
 
-		if (dataInterval < 100) {
-			errorMessage.setText("Data interval must be longer than 100ms");
+		if (dataInterval < 50) {
+			errorMessage.setText("Data interval must be longer than 50ms");
 			return;
 		}
 

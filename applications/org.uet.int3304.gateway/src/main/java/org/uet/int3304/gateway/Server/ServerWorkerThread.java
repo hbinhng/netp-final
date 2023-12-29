@@ -209,7 +209,7 @@ public class ServerWorkerThread implements Runnable {
     if (group == null || bucketId == null)
       return;
 
-    sendContent(String.format("400 DATA_INT=%d\n"));
+    sendContent(String.format("400 DATA_INT=%d\n", dataInterval));
   }
 
   @Override
