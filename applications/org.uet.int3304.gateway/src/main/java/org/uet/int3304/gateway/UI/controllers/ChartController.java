@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 
-import org.uet.int3304.gateway.bucket.Bucket;
+import org.uet.int3304.gateway.Bucket.Bucket;
 
 import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
