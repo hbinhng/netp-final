@@ -22,7 +22,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 public class ConfiguratorController implements Initializable {
 	private static final Map<String, String> BUCKETID_TO_TYPE = Map.ofEntries(
@@ -46,7 +45,8 @@ public class ConfiguratorController implements Initializable {
 	@FXML
 	private ListView<String> activeNodeList;
 
-	private Text savingStatus;
+	@FXML
+	private Label errorMessage;
 
 	private final NodeState state;
 	private final GroupManager groupManager;
@@ -57,19 +57,30 @@ public class ConfiguratorController implements Initializable {
 	}
 
 	public void saveConfig() {
-		if (dataIntervalInput.getText().equals("")) {
-			savingStatus.setText("Please enter data interval!");
-			return;
-		}
-		System.out.println(dataIntervalInput.getText());
+		var dataIntervalText = dataIntervalInput.getText();
 
-		if (dataIntervalInput.getText().equals("0")) {
-			savingStatus.setText("Data interval must be greater than 0!");
+		long dataInterval;
+
+		if (dataIntervalText.equals("")) {
+			errorMessage.setText("Please enter data interval");
 			return;
 		}
 
-		savingStatus.setText("Data interval save successfully!");
-		dataIntervalInput.setText("");
+		try {
+			dataInterval = Long.parseLong(dataIntervalText);
+		} catch (NumberFormatException exception) {
+			errorMessage.setText("Please enter a valid integer");
+			return;
+		}
+
+		if (dataInterval < 100) {
+			errorMessage.setText("Data interval must be longer than 100ms");
+			return;
+		}
+
+		errorMessage.setText("");
+
+		state.setDataInterval(dataInterval);
 	}
 
 	public void openGroupSelector() {

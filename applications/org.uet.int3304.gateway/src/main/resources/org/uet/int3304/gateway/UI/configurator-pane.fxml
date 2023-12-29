@@ -24,7 +24,13 @@
 
     <TextField fx:id="dataIntervalInput" layoutX="14.0" layoutY="65.0" />
     <Button fx:id="saveButton" layoutX="163.0" layoutY="65.0" mnemonicParsing="false"
-      onAction="#saveConfig" text="Button" />
+      onAction="#saveConfig" text="Save" />
+
+    <Label fx:id="errorMessage" layoutX="14.0" layoutY="90.0" text="" textFill="#c51818">
+      <font>
+        <Font name="System Bold" size="8.0" />
+      </font>
+    </Label>
 
     <Label layoutX="15.0" layoutY="106.0" text="Select group" />
 
