@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="20.0"
+  AnchorPane.rightAnchor="20.0" xmlns="http://javafx.com/javafx/11"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="org.uet.int3304.gateway.UI.controllers.graphs.TemperatureGraphController">
+  <LineChart fx:id="chart" layoutX="20.0" layoutY="25.0" prefHeight="92.0"
+    AnchorPane.leftAnchor="0.0"
+    AnchorPane.rightAnchor="0.0" title="Temperature">
+    <xAxis>
+      <NumberAxis autoRanging="false" lowerBound="-30.0" side="BOTTOM" tickLabelGap="0.0"
+        upperBound="0.0" />
+    </xAxis>
+    <yAxis>
+      <NumberAxis forceZeroInRange="false" lowerBound="37.0"
+        minorTickCount="2" minorTickLength="3.0" side="LEFT" tickUnit="0.5"
+        upperBound="40.0" />
+    </yAxis>
+    <createSymbols>false</createSymbols>
+  </LineChart>
+</AnchorPane>
