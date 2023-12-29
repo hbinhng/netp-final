@@ -5,9 +5,12 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.AbstractMap.SimpleEntry;
 
 import org.uet.int3304.gateway.AppConfig.Config;
+import org.uet.int3304.gateway.UI.NodeState;
 
 public class GatewayServer {
   private static final Object lock = new Object();
@@ -80,6 +83,26 @@ public class GatewayServer {
 
   public boolean full() {
     return connections.size() >= capacity;
+  }
+
+  public void configure() {
+    new Timer().schedule(new TimerTask() {
+      @Override
+      public void run() {
+        var dataInterval = NodeState.getInstance().getDataInterval();
+
+        synchronized (lock) {
+          for (var connection : connections.values()) {
+            var worker = connection.getValue();
+
+            worker.configure(dataInterval);
+          }
+        }
+      }
+    }, 0l);
+  }
+
+  public void configure(long connectionId) {
   }
 
   public static GatewayServer getInstance() {

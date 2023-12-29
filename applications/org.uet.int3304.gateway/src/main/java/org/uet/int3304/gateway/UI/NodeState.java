@@ -1,6 +1,10 @@
 package org.uet.int3304.gateway.UI;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.uet.int3304.gateway.AppConfig.Config;
+import org.uet.int3304.gateway.Server.GatewayServer;
 
 public class NodeState {
 	private static final Object lock = new Object();
@@ -20,6 +24,13 @@ public class NodeState {
 
 	public void setDataInterval(long dataInterval) {
 		this.dataInterval = dataInterval;
+
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				GatewayServer.getInstance().configure();
+			}
+		}, 0l);
 	}
 
 	public String getGroup() {
