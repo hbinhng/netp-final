@@ -8,7 +8,7 @@
   xmlns="http://javafx.com/javafx/11"
   xmlns:fx="http://javafx.com/fxml/1"
   fx:controller="org.uet.int3304.gateway.UI.controllers.graphs.TemperatureGraphController">
-  <LineChart fx:id="chart" layoutX="20.0" layoutY="25.0" prefHeight="92.0"
+  <LineChart fx:id="chart" animated="false" layoutX="20.0" layoutY="25.0" prefHeight="92.0"
     AnchorPane.leftAnchor="0.0"
     AnchorPane.rightAnchor="0.0" title="Temperature">
     <xAxis>
