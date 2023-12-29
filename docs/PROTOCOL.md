@@ -86,3 +86,9 @@
 - Client: `someunknowncommand arg1 arg2`
 
 - Server: `101 Unknown command`
+
+## 6. Malformed arguments
+
+- Client: Send a command without needed argument.
+
+- Server: `102 Malformed arguments`
