@@ -153,6 +153,13 @@ public class ServerWorkerThread implements Runnable {
       sendContent(UNKNOWN_SENDER);
       return;
     }
+
+    if (group == null || bucketId == null) {
+      sendContent(NODE_NOT_REGISTERED);
+      return;
+    }
+
+    configure(NodeState.getInstance().getDataInterval());
   }
 
   private void handleDataRequest(String[] tokens) {
@@ -194,6 +201,15 @@ public class ServerWorkerThread implements Runnable {
 
   public long getConnectionId() {
     return connectionId;
+  }
+
+  public void configure(long dataInterval) {
+    if (!greeted)
+      return;
+    if (group == null || bucketId == null)
+      return;
+
+    sendContent(String.format("400 DATA_INT=%d\n"));
   }
 
   @Override
