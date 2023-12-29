@@ -9,6 +9,7 @@ import java.net.Socket;
 import org.uet.int3304.gateway.Group.GroupManager;
 import org.uet.int3304.gateway.UI.BucketId;
 import org.uet.int3304.gateway.UI.GatewayUIState;
+import org.uet.int3304.gateway.UI.NodeState;
 
 public class ServerWorkerThread implements Runnable {
   private static final String UNKNOWN_SENDER = "100 Who are you?\n";
@@ -35,6 +36,7 @@ public class ServerWorkerThread implements Runnable {
 
   private final GroupManager groupManager;
   private final Socket internal;
+  private final NodeState nodeState;
 
   public ServerWorkerThread(Socket socket, long connectionId) throws IOException {
     internal = socket;
@@ -46,6 +48,7 @@ public class ServerWorkerThread implements Runnable {
     greeted = false;
 
     groupManager = GroupManager.getInstance();
+    nodeState = NodeState.getInstance();
   }
 
   private String readContent() {
@@ -177,9 +180,9 @@ public class ServerWorkerThread implements Runnable {
       return;
     }
 
-    // Only write to bucket when current group matches with selected
-    // group on GUI.
-    if (group.equals("SELECTED_GROUP_ON_GUI"))
+    var selectedGroup = nodeState.getGroup();
+
+    if (selectedGroup != null && group.equals(selectedGroup))
       GatewayUIState.getInstance().write(bucketId, data);
 
     sendContent(DATA_RECEIVED);
