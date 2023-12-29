@@ -8,6 +8,7 @@ public class Config {
   private int gatewayPort;
   private long dataInterval;
   private NodeType nodeType;
+  private String group;
 
   private Config() {
   }
@@ -31,6 +32,8 @@ public class Config {
       System.err.printf("Unknown node type '%s'\n", rawNodeType);
       System.exit(-1);
     }
+
+    group = overlappedConfigurations.getOrDefault("NODE_GROUP", "default");
   }
 
   public String getGatewayHost() {
@@ -47,6 +50,10 @@ public class Config {
 
   public NodeType getNodeType() {
     return nodeType;
+  }
+
+  public String getGroup() {
+    return group;
   }
 
   public static Config getInstance() {
