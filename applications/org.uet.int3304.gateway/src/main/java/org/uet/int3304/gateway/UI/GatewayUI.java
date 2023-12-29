@@ -41,6 +41,7 @@ public class GatewayUI extends Application {
   @Override
   public void stop() throws Exception {
     System.out.println("UI closed, cleaning up others");
+    TimelineManager.getInstance().stop();
     Program.cleanUp();
   }
 

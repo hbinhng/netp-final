@@ -5,15 +5,27 @@ import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 
 import org.uet.int3304.gateway.Bucket.Bucket;
+import org.uet.int3304.gateway.UI.TimelineManager;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
+import javafx.util.Duration;
 
 public abstract class ChartController {
   private final List<SimpleEntry<XYChart.Series<Number, Number>, Bucket>> associations;
 
-  protected ChartController() {
+  protected ChartController(Duration refreshInterval) {
     associations = new LinkedList<>();
+
+    var timeline = TimelineManager.getInstance()
+        .registerTimeline(
+            new KeyFrame(refreshInterval, (event) -> {
+              updateChart();
+            }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
   }
 
   protected void linkSeriesWithBucket(XYChart.Series<Number, Number> series, Bucket bucket) {

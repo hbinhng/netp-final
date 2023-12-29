@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.util.Duration;
 
 public class BloodPressureGraphController extends ChartController implements Initializable {
   private static final long DATA_RETENTION = 30 * 1000; // 30 seconds;
@@ -23,7 +24,7 @@ public class BloodPressureGraphController extends ChartController implements Ini
   private final Bucket diastolicBucket;
 
   public BloodPressureGraphController() {
-    super();
+    super(Duration.seconds(1));
     systolicBucket = new Bucket(DATA_RETENTION);
     diastolicBucket = new Bucket(DATA_RETENTION);
 

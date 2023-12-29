@@ -11,6 +11,7 @@ import org.uet.int3304.gateway.AppConfig.Config;
 import org.uet.int3304.gateway.Group.GroupManager;
 import org.uet.int3304.gateway.UI.BucketId;
 import org.uet.int3304.gateway.UI.NodeState;
+import org.uet.int3304.gateway.UI.TimelineManager;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -101,9 +102,11 @@ public class ConfiguratorController implements Initializable {
 		dataIntervalInput.setText(Long.toString(state.getDataInterval()));
 		groupSelector.getItems().clear();
 
-		var refreshActiveNodeListTimeline = new Timeline(
-				new KeyFrame(Duration.millis(500), (event) -> {
-					var connected = groupManager.getConnectedInGroup(state.getGroup());
+		var refreshActiveNodeListTimeline = TimelineManager.getInstance()
+				.registerTimeline(new KeyFrame(Duration.millis(500), (event) -> {
+					var newGroup = state.getGroup();
+
+					var connected = groupManager.getConnectedInGroup(newGroup);
 
 					var activeNodes = new LinkedList<String>();
 
@@ -117,7 +120,6 @@ public class ConfiguratorController implements Initializable {
 
 					activeNodeList.setItems(FXCollections.observableArrayList(activeNodes));
 				}));
-
 		refreshActiveNodeListTimeline.setCycleCount(Timeline.INDEFINITE);
 		refreshActiveNodeListTimeline.play();
 	}
