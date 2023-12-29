@@ -5,13 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class NodeMainThread implements Runnable {
+public class NodeSocketThread implements Runnable {
   private final Socket internal;
 
   private final BufferedInputStream ingress;
   private final DataOutputStream egress;
 
-  public NodeMainThread(Socket socket) throws IOException {
+  public NodeSocketThread(Socket socket) throws IOException {
     internal = socket;
 
     ingress = new BufferedInputStream(socket.getInputStream());

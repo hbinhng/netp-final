@@ -49,7 +49,7 @@ public class NodeClient {
 
   public void lifeCycle() {
     try {
-      var thread = new Thread(new NodeMainThread(internal));
+      var thread = new Thread(new NodeSocketThread(internal));
 
       thread.start();
     } catch (IOException exception) {
