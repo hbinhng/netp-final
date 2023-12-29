@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 
 /**
- * This bucket holds data with a retention policy
- * data can be pulled out in a frame of time
- * and all data in each frame will be calculated
- * using aggregate function.
+ * This bucket holds data with a retention policy.
  */
 public class Bucket {
   private final Object lock;
