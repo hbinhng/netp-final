@@ -34,8 +34,10 @@ public class ServerWorkerThread implements Runnable {
   private String bucketId;
 
   private final GroupManager groupManager;
+  private final Socket internal;
 
   public ServerWorkerThread(Socket socket, long connectionId) throws IOException {
+    internal = socket;
     this.connectionId = connectionId;
 
     ingress = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -183,6 +185,10 @@ public class ServerWorkerThread implements Runnable {
     sendContent(DATA_RECEIVED);
   }
 
+  private void handleQuit() {
+    sendContent(BYE);
+  }
+
   public long getConnectionId() {
     return connectionId;
   }
@@ -195,7 +201,7 @@ public class ServerWorkerThread implements Runnable {
       var content = readContent();
 
       if (content == null) {
-        System.out.println("Client unexpectedly closed connection");
+        System.out.printf("Client on connection [%d] unexpectedly closed connection\n", connectionId);
         break;
       }
 
@@ -205,6 +211,8 @@ public class ServerWorkerThread implements Runnable {
         sendContent(UNKNOWN_COMMAND_ERROR);
         continue;
       }
+
+      var quit = false;
 
       switch (tokens[0]) {
         case "ping":
@@ -222,8 +230,32 @@ public class ServerWorkerThread implements Runnable {
         case "data":
           handleDataRequest(tokens);
           break;
+        case "quit":
+          handleQuit();
+          quit = true;
+          break;
         default:
           sendContent(UNKNOWN_COMMAND_ERROR);
+          break;
+      }
+
+      if (quit) {
+        System.out.printf("Client on connection [%d] disconnected\n", connectionId);
+        break;
+      }
+    }
+
+    groupManager.unregisterNode(group, bucketId);
+
+    System.out.printf("Connection [%d] unregistered from group [%s] as [%s] data source\n",
+        connectionId, group, bucketId);
+
+    if (!internal.isClosed()) {
+      try {
+        internal.close();
+      } catch (IOException exception) {
+        System.err.printf("Cannot close connection [%d]\n", connectionId);
+        System.err.println(exception.getMessage());
       }
     }
 
