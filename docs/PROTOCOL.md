@@ -23,6 +23,12 @@
   
 - Server:
 
+  - If connection is already registered:
+
+    `308 Already registered`
+
+    **Note**: To prevent this message, make sure to be unregistered (issue unregister command or fresh new connection) before register.
+
   - If the group with `GROUP_NAME` does not exist:
   
     `300 Group and node registered`
@@ -41,7 +47,21 @@
     
 **Note**: Client has 2 configurations must be hold on server, don't reimplement with new type of client ID, try reusing connection ID of the worker thread which is responsible for that client.
 
-## 3. Gateway sends configuration to node [when node asks]
+## 3. Unregister
+
+- Client: `unregister`
+
+- Server:
+
+  - If node is registered:
+
+    `310 Node unregistered`
+
+  - If node is not registered:
+
+    `311 Node already unregistered`
+
+## 4. Gateway sends configuration to node [when node asks]
 
 - Client: `configure` (optional)
 
@@ -59,7 +79,7 @@
   
     `100 Who are you?`
 
-## 4. Data transmitting
+## 5. Data transmitting
 
 - Client: `data <DATA>`
 
@@ -81,14 +101,20 @@
   
     `100 Who are you?`
 
-## 5. Unknown command
+## 6. Unknown command
 
 - Client: `someunknowncommand arg1 arg2`
 
 - Server: `101 Unknown command`
 
-## 6. Malformed arguments
+## 7. Malformed arguments
 
 - Client: Send a command without needed argument.
 
 - Server: `102 Malformed arguments`
+
+## 8. Quit
+
+- Client: `quit`
+
+- Server: `501 OK bye`
