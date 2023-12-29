@@ -264,4 +264,13 @@ public class ServerWorkerThread implements Runnable {
 
     GatewayServer.getInstance().disposeWorker(connectionId);
   }
+
+  public void close() {
+    try {
+      internal.close();
+    } catch (IOException exception) {
+      System.err.printf("Cannot close socket on [%d] connection\n", connectionId);
+      System.err.println(exception.getMessage());
+    }
+  }
 }

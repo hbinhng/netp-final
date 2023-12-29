@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 import org.uet.int3304.gateway.AppConfig.Config;
 
@@ -13,7 +14,7 @@ public class GatewayServer {
   private static GatewayServer instance;
 
   private final int capacity;
-  private final Map<Long, Thread> connections;
+  private final Map<Long, SimpleEntry<Thread, ServerWorkerThread>> connections;
   private final ServerSocket internal;
   private Thread mainThread;
 
@@ -48,8 +49,10 @@ public class GatewayServer {
     mainThread.interrupt();
 
     synchronized (connections) {
-      for (var thread : connections.values())
-        thread.interrupt();
+      for (var thread : connections.values()) {
+        thread.getKey().interrupt();
+        thread.getValue().close();
+      }
     }
 
     try {
@@ -67,7 +70,7 @@ public class GatewayServer {
 
     thread.start();
 
-    connections.put(worker.getConnectionId(), thread);
+    connections.put(worker.getConnectionId(), new SimpleEntry<>(thread, worker));
     System.out.printf("Connection pool: %d/%d\n", connections.size(), capacity);
   }
 
