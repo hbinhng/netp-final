@@ -51,6 +51,8 @@ public class NodeClient {
     try {
       var thread = new Thread(new NodeSocketThread(internal));
 
+      thread.setName("SocketThread");
+
       thread.start();
     } catch (IOException exception) {
       System.err.println("Cannot start connection thread");
@@ -60,6 +62,8 @@ public class NodeClient {
 
     try {
       var thread = new Thread(new NodeGeneratorThread(internal));
+
+      thread.setName("GeneratorThread");
 
       thread.start();
     } catch (IOException exception) {

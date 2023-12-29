@@ -43,6 +43,8 @@ public class NodeGeneratorThread implements Runnable {
 
   @Override
   public void run() {
+    System.out.println("Generator thread started");
+
     var next = spawn;
     var generator = NodeClient.getInstance().getGenerator();
     var state = NodeState.getInstance();
