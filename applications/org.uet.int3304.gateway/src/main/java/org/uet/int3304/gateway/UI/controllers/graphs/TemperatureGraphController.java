@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.util.Duration;
 
 public class TemperatureGraphController extends ChartController implements Initializable {
   private static final long DATA_RETENTION = 30 * 1000; // 30 seconds;
@@ -23,7 +22,7 @@ public class TemperatureGraphController extends ChartController implements Initi
   private final Bucket temperatureBucket;
 
   public TemperatureGraphController() {
-    super(Duration.seconds(1));
+    super();
     temperatureBucket = new Bucket(DATA_RETENTION);
 
     GatewayUIState.getInstance().registerBucket(

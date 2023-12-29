@@ -16,6 +16,10 @@ import javafx.util.Duration;
 public abstract class ChartController {
   private final List<SimpleEntry<XYChart.Series<Number, Number>, Bucket>> associations;
 
+  protected ChartController() {
+    this(Duration.millis(20));
+  }
+
   protected ChartController(Duration refreshInterval) {
     associations = new LinkedList<>();
 
