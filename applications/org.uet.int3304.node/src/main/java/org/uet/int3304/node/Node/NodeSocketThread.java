@@ -105,5 +105,7 @@ public class NodeSocketThread implements Runnable {
 
       parseConfigResponse(content);
     }
+
+    System.out.println("Socket thread terminated");
   }
 }

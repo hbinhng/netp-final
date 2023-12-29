@@ -49,7 +49,7 @@ public class NodeGeneratorThread implements Runnable {
     var generator = NodeClient.getInstance().getGenerator();
     var state = NodeState.getInstance();
 
-    while (true) {
+    while (!Thread.interrupted()) {
       var now = System.currentTimeMillis();
 
       if (now < next) {
@@ -75,5 +75,9 @@ public class NodeGeneratorThread implements Runnable {
       else
         next = now - (diff % interval) + interval;
     }
+
+    timer.cancel();
+
+    System.out.println("Generator thread terminated");
   }
 }
