@@ -31,8 +31,9 @@
   - If the group with `GROUP_NAME` exists and there is already a node which is `NODE_TYPE`:
   
     `309 Group already has similar data source`
+    
+**Note**: Client has 2 configurations must be hold on server, don't reimplement with new type of client ID, try reusing connection ID of the worker thread which is responsible for that client.
 
-## 2. Communication
+## 2. Data transmitting
 
-- Client: &lt;heartbeat data&gt; or &lt;temperature data&gt;
-- Server: gateways receive data and save it to the database corresponding to node id and type then return `201 OK`
+- Client: 
