@@ -1,33 +1,31 @@
 package org.uet.int3304.gateway.Group;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class GroupManager {
   private static final Object lock = new Object();
   private static GroupManager instance;
 
-  private final Map<String, Set<String>> groups;
+  private final Map<String, Map<String, Long>> groups;
 
   public GroupManager() {
     groups = new HashMap<>();
   }
 
-  public synchronized int registerNode(String groupName, String bucketId) {
+  public synchronized int registerNode(String groupName, String bucketId, long connectionId) {
     var group = groups.get(groupName);
 
     if (group == null) {
-      group = new HashSet<>();
-      group.add(bucketId);
+      group = new HashMap<>();
+      group.put(bucketId, connectionId);
       groups.put(groupName, group);
 
       return 2;
     }
 
-    if (!group.contains(bucketId)) {
-      group.add(bucketId);
+    if (!group.containsKey(bucketId)) {
+      group.put(bucketId, connectionId);
 
       return 1;
     }
@@ -41,7 +39,7 @@ public class GroupManager {
     if (group == null)
       return;
 
-    if (!group.contains(bucketId))
+    if (!group.containsKey(bucketId))
       return;
 
     group.remove(bucketId);

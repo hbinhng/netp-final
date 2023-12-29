@@ -105,7 +105,7 @@ public class ServerWorkerThread implements Runnable {
 
     var group = tokens[2];
 
-    int registration = groupManager.registerNode(group, bucketId);
+    int registration = groupManager.registerNode(group, bucketId, connectionId);
 
     switch (registration) {
       case 2:
