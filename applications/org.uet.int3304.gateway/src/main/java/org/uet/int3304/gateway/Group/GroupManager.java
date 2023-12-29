@@ -48,8 +48,11 @@ public class GroupManager {
 
     group.remove(bucketId);
 
-    if (group.size() == 0)
+    if (group.size() == 0) {
+      System.out.printf("Group [%s] has no member left\n", groupName);
+      System.out.printf("Pruning group [%s]\n", groupName);
       groups.remove(groupName);
+    }
   }
 
   public synchronized List<String> getGroups() {
