@@ -24,6 +24,9 @@ public class ServerMainThread implements Runnable {
     var gatewayServer = GatewayServer.getInstance();
 
     while (true) {
+      if (Thread.interrupted())
+        break;
+
       if (gatewayServer.full()) {
         try {
           Thread.sleep(10);
@@ -41,6 +44,9 @@ public class ServerMainThread implements Runnable {
       try {
         socket = server.accept();
       } catch (IOException exception) {
+        if (Thread.interrupted())
+          break;
+
         System.err.println("Failed to accept new client");
         System.err.println(exception.getMessage());
 
@@ -60,5 +66,7 @@ public class ServerMainThread implements Runnable {
 
       GatewayServer.getInstance().registerWorker(worker);
     }
+
+    System.out.println("Shuting down main thread");
   }
 }

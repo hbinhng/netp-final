@@ -48,25 +48,43 @@ public class NodeClient {
   }
 
   public void lifeCycle() {
-    try {
-      var thread = new Thread(new NodeSocketThread(internal));
+    Thread socketThread = null;
 
-      thread.start();
+    try {
+      socketThread = new Thread(new NodeSocketThread(internal));
+
+      socketThread.setName("SocketThread");
+
+      socketThread.start();
     } catch (IOException exception) {
       System.err.println("Cannot start connection thread");
       System.err.println(exception.getMessage());
       System.exit(-1);
     }
 
-    try {
-      var thread = new Thread(new NodeGeneratorThread(internal));
+    Thread generatorThread = null;
 
-      thread.start();
+    try {
+      generatorThread = new Thread(new NodeGeneratorThread(internal));
+
+      generatorThread.setName("GeneratorThread");
+
+      generatorThread.start();
     } catch (IOException exception) {
       System.err.println("Cannot start generator thread");
       System.err.println(exception.getMessage());
       System.exit(-1);
     }
+
+    try {
+      socketThread.join();
+    } catch (InterruptedException ignored) {
+      return;
+    }
+
+    System.out.println("Terminating generator thread");
+
+    generatorThread.interrupt();
   }
 
   public Generator<Float> getGenerator() {

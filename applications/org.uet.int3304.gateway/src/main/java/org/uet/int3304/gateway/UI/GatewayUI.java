@@ -1,5 +1,7 @@
 package org.uet.int3304.gateway.UI;
 
+import org.uet.int3304.gateway.Program;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +36,13 @@ public class GatewayUI extends Application {
     stage.show();
 
     instance = this;
+  }
+
+  @Override
+  public void stop() throws Exception {
+    System.out.println("UI closed, cleaning up others");
+    TimelineManager.getInstance().stop();
+    Program.cleanUp();
   }
 
   public static void launch(String[] args) {

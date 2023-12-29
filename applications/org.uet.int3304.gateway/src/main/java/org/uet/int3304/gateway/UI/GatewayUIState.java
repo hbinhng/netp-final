@@ -11,7 +11,7 @@ public class GatewayUIState {
 
   private final Map<String, Bucket> buckets;
 
-  public GatewayUIState() {
+  private GatewayUIState() {
     buckets = new HashMap<>();
   }
 

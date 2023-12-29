@@ -5,15 +5,19 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.AbstractMap.SimpleEntry;
 
 import org.uet.int3304.gateway.AppConfig.Config;
+import org.uet.int3304.gateway.UI.NodeState;
 
 public class GatewayServer {
   private static final Object lock = new Object();
   private static GatewayServer instance;
 
   private final int capacity;
-  private final Map<Long, Thread> connections;
+  private final Map<Long, SimpleEntry<Thread, ServerWorkerThread>> connections;
   private final ServerSocket internal;
   private Thread mainThread;
 
@@ -43,6 +47,25 @@ public class GatewayServer {
     mainThread.start();
   }
 
+  public void close() {
+    System.out.println("Closing server");
+    mainThread.interrupt();
+
+    synchronized (connections) {
+      for (var thread : connections.values()) {
+        thread.getKey().interrupt();
+        thread.getValue().close();
+      }
+    }
+
+    try {
+      internal.close();
+    } catch (IOException exception) {
+      System.err.println("Cannot close socket server");
+      System.err.println(exception.getMessage());
+    }
+  }
+
   public void registerWorker(ServerWorkerThread worker) {
     var thread = new Thread(worker);
 
@@ -50,7 +73,7 @@ public class GatewayServer {
 
     thread.start();
 
-    connections.put(worker.getConnectionId(), thread);
+    connections.put(worker.getConnectionId(), new SimpleEntry<>(thread, worker));
     System.out.printf("Connection pool: %d/%d\n", connections.size(), capacity);
   }
 
@@ -60,6 +83,26 @@ public class GatewayServer {
 
   public boolean full() {
     return connections.size() >= capacity;
+  }
+
+  public void configure() {
+    new Timer().schedule(new TimerTask() {
+      @Override
+      public void run() {
+        var dataInterval = NodeState.getInstance().getDataInterval();
+
+        synchronized (lock) {
+          for (var connection : connections.values()) {
+            var worker = connection.getValue();
+
+            worker.configure(dataInterval);
+          }
+        }
+      }
+    }, 0l);
+  }
+
+  public void configure(long connectionId) {
   }
 
   public static GatewayServer getInstance() {

@@ -12,52 +12,29 @@ import java.util.AbstractMap.SimpleEntry;
  */
 public class Bucket {
   private final Object lock;
-  private final BucketAggregator aggregator;
-  private final long frameLength;
   private final long retention;
-  private final List<BucketFrame> frames;
+  private final List<SimpleEntry<Long, Double>> data;
 
   /**
    * 
    * @param retention Data retention period in milliseconds.
    */
   public Bucket(long retention) {
-    this(retention, 1000 /* 1 second */);
-  }
-
-  /**
-   * 
-   * @param retention   Data retention period in milliseconds.
-   * @param frameLength Aggregated frame length in milliseconds.
-   */
-  public Bucket(long retention, long frameLength) {
-    this(retention, frameLength, BucketAggregator.MEAN);
-  }
-
-  /**
-   * 
-   * @param retention   Data retention period in milliseconds.
-   * @param frameLength Aggregated frame length in milliseconds.
-   * @param aggregator  Aggregator function to aggregate each frame.
-   */
-  public Bucket(long retention, long frameLength, BucketAggregator aggregator) {
-    lock = new Object();
     this.retention = retention;
-    this.frameLength = frameLength;
-    this.aggregator = aggregator;
-    frames = new LinkedList<BucketFrame>();
+    data = new LinkedList<>();
+    lock = new Object();
   }
 
   private void trim() {
     var now = System.currentTimeMillis();
 
     synchronized (lock) {
-      var iterator = frames.iterator();
+      var iterator = data.iterator();
 
       while (iterator.hasNext()) {
-        var frame = iterator.next();
+        var piece = iterator.next();
 
-        if (now - frame.getSpawnPoint() > retention + frameLength)
+        if (now - piece.getKey() > retention)
           iterator.remove();
       }
     }
@@ -67,20 +44,7 @@ public class Bucket {
     var now = System.currentTimeMillis();
 
     synchronized (lock) {
-      BucketFrame currentFrame;
-
-      if (frames.isEmpty())
-        frames.add(currentFrame = new BucketFrame(frameLength, aggregator));
-      else {
-        var tail = frames.get(frames.size() - 1);
-
-        if (tail.getSpawnPoint() + frameLength < now)
-          frames.add(currentFrame = new BucketFrame(frameLength, aggregator));
-        else
-          currentFrame = tail;
-      }
-
-      currentFrame.pushData(value);
+      data.add(new SimpleEntry<>(now, value));
     }
   }
 
@@ -90,13 +54,10 @@ public class Bucket {
     var result = new LinkedList<SimpleEntry<Long, Double>>();
 
     synchronized (lock) {
-      for (var frame : frames) {
-        var entry = new SimpleEntry<Long, Double>(
-            frame.getSpawnPoint(),
-            frame.getFrameValue());
+      var iterator = data.iterator();
 
-        result.add(entry);
-      }
+      while (iterator.hasNext())
+        result.add(iterator.next());
     }
 
     return result;

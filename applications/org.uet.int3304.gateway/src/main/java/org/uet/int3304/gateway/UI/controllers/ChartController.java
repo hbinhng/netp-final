@@ -5,15 +5,31 @@ import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 
 import org.uet.int3304.gateway.Bucket.Bucket;
+import org.uet.int3304.gateway.UI.TimelineManager;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
+import javafx.util.Duration;
 
 public abstract class ChartController {
   private final List<SimpleEntry<XYChart.Series<Number, Number>, Bucket>> associations;
 
   protected ChartController() {
+    this(Duration.millis(20));
+  }
+
+  protected ChartController(Duration refreshInterval) {
     associations = new LinkedList<>();
+
+    var timeline = TimelineManager.getInstance()
+        .registerTimeline(
+            new KeyFrame(refreshInterval, (event) -> {
+              updateChart();
+            }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
   }
 
   protected void linkSeriesWithBucket(XYChart.Series<Number, Number> series, Bucket bucket) {
@@ -24,14 +40,14 @@ public abstract class ChartController {
     var bucketData = bucket.getData();
     var seriesData = new LinkedList<XYChart.Data<Number, Number>>();
 
-    var now = System.currentTimeMillis() / 1000;
+    var now = System.currentTimeMillis();
 
     for (var data : bucketData) {
-      var x = data.getKey() / 1000 - now;
+      var x = data.getKey() - now;
       var y = data.getValue();
 
       seriesData.add(
-          new XYChart.Data<Number, Number>(x, y));
+          new XYChart.Data<Number, Number>(((double) x) / 1000f, y));
     }
 
     series.setData(FXCollections.observableList(seriesData));
