@@ -40,14 +40,14 @@ public abstract class ChartController {
     var bucketData = bucket.getData();
     var seriesData = new LinkedList<XYChart.Data<Number, Number>>();
 
-    var now = System.currentTimeMillis() / 1000;
+    var now = System.currentTimeMillis();
 
     for (var data : bucketData) {
-      var x = data.getKey() / 1000 - now;
+      var x = data.getKey() - now;
       var y = data.getValue();
 
       seriesData.add(
-          new XYChart.Data<Number, Number>(x, y));
+          new XYChart.Data<Number, Number>(((double) x) / 1000f, y));
     }
 
     series.setData(FXCollections.observableList(seriesData));
