@@ -1,6 +1,8 @@
 package org.uet.int3304.gateway.Group;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GroupManager {
@@ -46,6 +48,10 @@ public class GroupManager {
 
     if (group.size() == 0)
       groups.remove(groupName);
+  }
+
+  public synchronized List<String> getGroups() {
+    return Arrays.asList(groups.keySet().toArray(new String[0]));
   }
 
   public static GroupManager getInstance() {
