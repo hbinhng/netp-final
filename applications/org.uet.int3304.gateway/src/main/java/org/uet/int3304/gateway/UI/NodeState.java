@@ -9,7 +9,7 @@ public class NodeState {
 	private long dataInterval;
 	private String group;
 
-	public NodeState() {
+	private NodeState() {
 		dataInterval = Config.getInstance().getDataPollInterval();
 		group = null;
 	}

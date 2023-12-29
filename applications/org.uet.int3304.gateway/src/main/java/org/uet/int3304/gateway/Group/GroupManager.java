@@ -13,7 +13,7 @@ public class GroupManager {
 
   private final Map<String, Map<String, Long>> groups;
 
-  public GroupManager() {
+  private GroupManager() {
     groups = new HashMap<>();
   }
 
