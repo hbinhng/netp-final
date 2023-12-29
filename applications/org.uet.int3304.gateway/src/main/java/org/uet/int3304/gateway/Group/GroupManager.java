@@ -2,8 +2,10 @@ package org.uet.int3304.gateway.Group;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 public class GroupManager {
   private static final Object lock = new Object();
@@ -52,6 +54,20 @@ public class GroupManager {
 
   public synchronized List<String> getGroups() {
     return Arrays.asList(groups.keySet().toArray(new String[0]));
+  }
+
+  public List<SimpleEntry<Long, String>> getConnectedInGroup(String groupName) {
+    var group = groups.get(groupName);
+
+    if (group == null)
+      return Arrays.asList();
+
+    var nodes = new LinkedList<SimpleEntry<Long, String>>();
+
+    for (var entry : group.entrySet())
+      nodes.add(new SimpleEntry<>(entry.getValue(), entry.getKey()));
+
+    return nodes;
   }
 
   public static GroupManager getInstance() {
