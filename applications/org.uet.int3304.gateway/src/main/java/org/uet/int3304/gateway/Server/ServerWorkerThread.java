@@ -7,11 +7,15 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import org.uet.int3304.gateway.UI.BucketId;
+import org.uet.int3304.gateway.UI.GatewayUIState;
 
 public class ServerWorkerThread implements Runnable {
-  private static final String UNKNOWN_COMMAND_ERROR = "101 Unknown command\n";
   private static final String UNKNOWN_SENDER = "100 Who are you?\n";
+  private static final String UNKNOWN_COMMAND_ERROR = "101 Unknown command\n";
+  private static final String MALFORMED_ARGUMENTS = "102 Malformed arguments\n";
   private static final String DATA_SOURCE_ALREADY_EXISTS = "309 Group already has similar data source\n";
+  private static final String NODE_NOT_REGISTERED = "401 Node is not registered\n";
+  private static final String DATA_RECEIVED = "500 Data received\n";
   private static final String GREET_REPLY = "200 Pong\n";
 
   private final long connectionId;
@@ -21,7 +25,7 @@ public class ServerWorkerThread implements Runnable {
 
   private boolean greeted;
   private String group;
-  private BucketId bucket;
+  private String bucketId;
 
   public ServerWorkerThread(Socket socket, long connectionId) throws IOException {
     this.connectionId = connectionId;
@@ -78,6 +82,32 @@ public class ServerWorkerThread implements Runnable {
       sendContent(UNKNOWN_SENDER);
       return;
     }
+
+    if (group == null || bucketId == null) {
+      sendContent(NODE_NOT_REGISTERED);
+      return;
+    }
+
+    if (tokens.length != 2) {
+      sendContent(MALFORMED_ARGUMENTS);
+      return;
+    }
+
+    float data;
+
+    try {
+      data = Float.parseFloat(tokens[1]);
+    } catch (NumberFormatException ignored) {
+      sendContent(MALFORMED_ARGUMENTS);
+      return;
+    }
+
+    // Only write to bucket when current group matches with selected
+    // group on GUI.
+    if (group.equals("SELECTED_GROUP_ON_GUI"))
+      GatewayUIState.getInstance().write(bucketId, data);
+
+    sendContent(DATA_RECEIVED);
   }
 
   public long getConnectionId() {
