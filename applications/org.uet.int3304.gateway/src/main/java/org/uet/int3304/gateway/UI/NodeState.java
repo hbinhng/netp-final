@@ -7,9 +7,11 @@ public class NodeState {
 	private static NodeState instance;
 
 	private long dataInterval;
+	private String group;
 
 	public NodeState() {
 		dataInterval = Config.getInstance().getDataPollInterval();
+		group = null;
 	}
 
 	public long getDataInterval() {
@@ -18,6 +20,14 @@ public class NodeState {
 
 	public void setDataInterval(long dataInterval) {
 		this.dataInterval = dataInterval;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
 	public static NodeState getInstance() {
