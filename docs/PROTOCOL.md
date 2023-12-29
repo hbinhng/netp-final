@@ -92,3 +92,9 @@
 - Client: Send a command without needed argument.
 
 - Server: `102 Malformed arguments`
+
+## 7. Quit
+
+- Client: `quit`
+
+- Server: `501 OK bye`
