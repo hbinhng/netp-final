@@ -189,8 +189,19 @@ public class ServerWorkerThread implements Runnable {
 
     var selectedGroup = nodeState.getGroup();
 
-    if (selectedGroup != null && group.equals(selectedGroup))
-      GatewayUIState.getInstance().write(bucketId, data);
+    if (selectedGroup != null && group.equals(selectedGroup)) {
+      var uiState = GatewayUIState.getInstance();
+
+      if (bucketId.equals(BucketId.SYSTOLIC_BUCKET) || bucketId.equals(BucketId.DIASTOLIC_BUCKET)) {
+        // 2 bucket handle;
+        var systolic = Math.floor(data);
+        var diastolic = Math.floor((data - systolic) * 100);
+
+        uiState.write(BucketId.SYSTOLIC_BUCKET, systolic);
+        uiState.write(BucketId.DIASTOLIC_BUCKET, diastolic);
+      } else
+        uiState.write(bucketId, data);
+    }
 
     sendContent(DATA_RECEIVED);
   }
