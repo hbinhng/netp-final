@@ -198,6 +198,9 @@ public class ServerWorkerThread implements Runnable {
     System.out.println("Worker thread initialized");
 
     while (true) {
+      if (Thread.interrupted())
+        break;
+
       var content = readContent();
 
       if (content == null) {

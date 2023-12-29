@@ -14,4 +14,8 @@ public class Program {
     if (!config.getHeadless())
       GatewayUI.launch(args);
   }
+
+  public static void cleanUp() {
+    GatewayServer.getInstance().close();
+  }
 }

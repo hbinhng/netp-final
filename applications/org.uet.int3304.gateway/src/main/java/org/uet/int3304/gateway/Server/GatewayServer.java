@@ -43,6 +43,23 @@ public class GatewayServer {
     mainThread.start();
   }
 
+  public void close() {
+    System.out.println("Closing server");
+    mainThread.interrupt();
+
+    synchronized (connections) {
+      for (var thread : connections.values())
+        thread.interrupt();
+    }
+
+    try {
+      internal.close();
+    } catch (IOException exception) {
+      System.err.println("Cannot close socket server");
+      System.err.println(exception.getMessage());
+    }
+  }
+
   public void registerWorker(ServerWorkerThread worker) {
     var thread = new Thread(worker);
 
